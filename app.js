@@ -1,25 +1,19 @@
 const express = require("express");
-
 const app = express();
+const mongoose = require("mongoose");
 const PORT = 4001;
+const {MONGOURI} = require('./keys')
 
-const customMiddleware = (req,res,next) => {
-    console.log("middleware exexuted!!");
-    next();
-}
+// Connecting mongoose
+mongoose.connect(MONGOURI)
 
-
-// app.use(customMiddleware);
-
-
-app.get('/',function(req,res){
-    console.log("home");
-    res.send("Hello world");
+mongoose.connection.on('connected',()=>{
+    console.log("Connected to mongo");
 })
-app.get('/about',customMiddleware,function(req,res){
-    console.log("about");
-    res.send("about page");
-})
+
+mongoose.connection.on('error',(err)=>{
+    console.log("error connecting ",err);
+})  
 
 app.listen(PORT,()=>{
     console.log("Server is running on ",PORT);
