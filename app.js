@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const PORT = 4001;
 const {MONGOURI} = require('./keys')
 
+
+require("./models/user")
+mongoose.model("User")
+
 // Connecting mongoose
 mongoose.connect(MONGOURI)
 
